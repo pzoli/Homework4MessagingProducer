@@ -1,6 +1,4 @@
-package hu.infokristaly.homework4messagingproducer;
-
-import static org.junit.jupiter.api.Assertions.assertTrue;
+package hu.infokristaly.messagingproducer;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -10,7 +8,6 @@ class Homework4messagingproducerApplicationTests {
 
 	@Test
 	void contextLoads() {
-		assertTrue(true, "True");
 	}
 
 }
