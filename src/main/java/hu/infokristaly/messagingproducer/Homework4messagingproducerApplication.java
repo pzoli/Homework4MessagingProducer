@@ -22,7 +22,7 @@ public class Homework4messagingproducerApplication {
 
 	private static JmsTemplate jmsTemplate;
 	private static int counter = 0;
-	
+
 	@Bean
 	public MessageConverter jacksonJmsMessageConverter() {
 		MappingJackson2MessageConverter converter = new MappingJackson2MessageConverter();
@@ -39,13 +39,16 @@ public class Homework4messagingproducerApplication {
 		jmsTemplate = context.getBean(JmsTemplate.class);
 	}
 
+	public static void sendMessage(Customer customer) {
+		jmsTemplate.convertAndSend("someQueue", customer);
+	}
+
 	@Scheduled(fixedRate = 5000)
-	public void sendMessage() {
+	public static void sendMessagePeriodically() {
 		Customer customer = new Customer();
 		customer.setId(String.valueOf(counter));
 		customer.setName("John Doe (" + counter + ")");
-		jmsTemplate.convertAndSend("someQueue", customer);
+		sendMessage(customer);
 		counter++;
-
 	}
 }
