@@ -22,6 +22,7 @@ public class Homework4messagingproducerApplication {
 
 	private static JmsTemplate jmsTemplate;
 	private static int counter = 0;
+	
 	@Bean
 	public MessageConverter jacksonJmsMessageConverter() {
 		MappingJackson2MessageConverter converter = new MappingJackson2MessageConverter();
