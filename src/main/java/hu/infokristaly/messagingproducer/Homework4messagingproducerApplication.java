@@ -11,12 +11,17 @@ import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.support.converter.MappingJackson2MessageConverter;
 import org.springframework.jms.support.converter.MessageConverter;
 import org.springframework.jms.support.converter.MessageType;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 
 import hu.infokristaly.messagingconsumer.jms.dtos.Customer;
 
 @SpringBootApplication
+@EnableScheduling
 public class Homework4messagingproducerApplication {
 
+	private static JmsTemplate jmsTemplate;
+	private static int counter = 0;
 	@Bean
 	public MessageConverter jacksonJmsMessageConverter() {
 		MappingJackson2MessageConverter converter = new MappingJackson2MessageConverter();
@@ -30,11 +35,16 @@ public class Homework4messagingproducerApplication {
 
 	public static void main(String[] args) {
 		ConfigurableApplicationContext context = SpringApplication.run(Homework4messagingproducerApplication.class, args);
-		JmsTemplate jmsTemplate = context.getBean(JmsTemplate.class);
-		Customer customer = new Customer();
-		customer.setId("123");
-		customer.setName("John Doe");
-		jmsTemplate.convertAndSend("someQueue", customer);
+		jmsTemplate = context.getBean(JmsTemplate.class);
 	}
 
+	@Scheduled(fixedRate = 5000)
+	public void sendMessage() {
+		Customer customer = new Customer();
+		customer.setId(String.valueOf(counter));
+		customer.setName("John Doe (" + counter + ")");
+		jmsTemplate.convertAndSend("someQueue", customer);
+		counter++;
+
+	}
 }
