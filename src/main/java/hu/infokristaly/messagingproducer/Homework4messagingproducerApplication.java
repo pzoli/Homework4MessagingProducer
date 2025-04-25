@@ -20,8 +20,8 @@ import hu.infokristaly.messagingconsumer.jms.dtos.Customer;
 @EnableScheduling
 public class Homework4messagingproducerApplication {
 
-	private static JmsTemplate jmsTemplate;
-	private static int counter = 0;
+	public static JmsTemplate jmsTemplate;
+	public static int counter = 0;
 
 	@Bean
 	public MessageConverter jacksonJmsMessageConverter() {
